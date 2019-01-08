@@ -1,0 +1,84 @@
+onkeyEventHandler
+
+onkeyup: 키보드를 눌렀다가 뗄 때 이벤트가 발생한다.
+onkeydown: 키보드가 눌릴 때 이벤트가 발생한다.
+onkeypress: 키보드로 글자가 입력 될 때 이벤트가 발생한다.
+
+
+//숫자만 입력되게 함수 걸기
+<input type="text" onkeydown="filterNumber(event);">
+.
+.
+.
+function filterNumber(event) {
+  event.preventDefault();
+}
+
+onkeypress 이벤트 핸들러는 한글 입력이 가능. 이벤트 자체가 발생하지 않음.
+onkeyup 이벤트 핸들러는 이미 글자가 입력되었을 때 발생. onkeyup 이벤트 핸들러로는 모든 글자가 입력 가능.
+
+
+//숫자입력 허용 함수
+function filterNumber(event) {
+  var code = event.keyCode; //1
+  if (code > 47 && code < 58) {
+    return;
+  } 
+  event.preventDefault(); //2
+}
+
+숫자 0의 키 코드: 48이고, 숫자 9의 키 코드: 57. 
+따라서 키 코드가 47보다 크고 58보다 작으면 숫자를 입력한 것이기 때문에 2가 호출되지 않도록 반환.
+
+
+//점입력 허용 함수
+function filterNumber(event) {
+  var code = event.keyCode;
+  if (code > 47 && code < 58) {
+    return;
+  }
+  if (code === 110 || code === 190) {
+    return;
+  }
+  event.preventDefault();
+}
+
+점(.)의 키 코드: 110
+
+
+//단축키 입력 허용 함수
+function filterNumber(event) {
+  var code = event.keyCode;
+  if (code > 47 && code < 58) {
+    return;
+  }
+  if (code === 110 || code === 190) {
+    return;
+  }
+  if (event.ctrlKey || event.altKey) {
+    return;
+  }
+  event.preventDefault();
+}
+
+
+//특수키 입력 허용 함수
+function filterNumber(event) {
+  var code = event.keyCode;
+  if (code > 47 && code < 58) {
+    return;
+  }
+  if (code === 110 || code === 190) {
+    return;
+  }
+  if (event.ctrlKey || event.altKey) {
+    return;
+  }
+  if (code === 9 || code === 36 || code === 35 || code === 37 ||
+      code === 39 || code === 8 || code === 46) {
+    return;
+  }
+  event.preventDefault();
+}
+
+참고: https://www.3rabbitz.com/blog_ko/a6068a3f953de9d8
